@@ -4,6 +4,8 @@ import com.example.ticketbookingrailwayapplication.model.Role;
 import com.example.ticketbookingrailwayapplication.model.User;
 import com.example.ticketbookingrailwayapplication.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.AuthenticatedPrincipal;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -32,8 +34,9 @@ public class UserController {
         return "registration";
     }
     @GetMapping("/hello")
-    public String hello(Model model) {
-        model.addAttribute("name", "User exists! try again");
+    public String hello(
+            @AuthenticationPrincipal User user, Model model) {
+        model.addAttribute("user", user.getUsername());
         return "hello";
     }
 

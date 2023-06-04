@@ -5,10 +5,9 @@
 </head>
 <body>
 Login page:
-<p th:text="${message}"/>
 
-<div th:if="${param.error}">
-  Invalid username and password.
+<div th:if="${param.error}" style="color:red">
+  Invalid username or password.
 </div>
 <div th:if="${param.logout}">
   You have been logged out.
