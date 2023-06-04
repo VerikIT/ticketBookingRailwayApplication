@@ -1,7 +1,7 @@
 package com.example.ticketbookingrailwayapplication.service;
 
 import com.example.ticketbookingrailwayapplication.dao.TrainRepository;
-import com.example.ticketbookingrailwayapplication.entity.Train;
+import com.example.ticketbookingrailwayapplication.model.Train;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,20 +16,7 @@ public class TrainService {
     @Autowired
     public TrainService(TrainRepository trainRepository) {
         this.trainRepository = trainRepository;
-        {
-            Train train1 = new Train();
-            train1.setNumber("105К");
-            train1.setTrainName("Київ-Одеса");
-            addNew(train1);
-            Train train2 = new Train();
-            train2.setNumber("022Л");
-            train2.setTrainName("ЛЬвів-Харків");
-            addNew(train2);
-            Train train3 = new Train();
-            train3.setNumber("038К");
-            train3.setTrainName("Київ-Запоріжжя");
-            addNew(train3);
-        }
+
 
     }
 

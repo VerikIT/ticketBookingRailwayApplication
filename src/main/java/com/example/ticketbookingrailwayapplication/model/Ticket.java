@@ -1,4 +1,4 @@
-package com.example.ticketbookingrailwayapplication.entity;
+package com.example.ticketbookingrailwayapplication.model;
 
 import jakarta.persistence.*;
 import lombok.Data;
@@ -8,13 +8,11 @@ import lombok.Data;
 @Data
 public class Ticket {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "train_id", nullable = false)
     private Train train;
-//    @Transient
-//    private String trainName;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "start_station_id", nullable = false)
     private Station startStation;

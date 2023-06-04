@@ -1,6 +1,6 @@
 package com.example.ticketbookingrailwayapplication.dao;
 
-import com.example.ticketbookingrailwayapplication.entity.Ticket;
+import com.example.ticketbookingrailwayapplication.model.Ticket;
 import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;

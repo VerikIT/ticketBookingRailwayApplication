@@ -1,6 +1,6 @@
 package com.example.ticketbookingrailwayapplication.controller;
 
-import com.example.ticketbookingrailwayapplication.entity.Station;
+import com.example.ticketbookingrailwayapplication.model.Station;
 import com.example.ticketbookingrailwayapplication.service.StationService;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;

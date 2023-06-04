@@ -1,9 +1,9 @@
 package com.example.ticketbookingrailwayapplication.service;
 
 import com.example.ticketbookingrailwayapplication.dao.TicketRepository;
-import com.example.ticketbookingrailwayapplication.entity.Station;
-import com.example.ticketbookingrailwayapplication.entity.Ticket;
-import com.example.ticketbookingrailwayapplication.entity.Train;
+import com.example.ticketbookingrailwayapplication.model.Station;
+import com.example.ticketbookingrailwayapplication.model.Ticket;
+import com.example.ticketbookingrailwayapplication.model.Train;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

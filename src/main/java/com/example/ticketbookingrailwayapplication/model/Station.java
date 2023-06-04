@@ -1,34 +1,29 @@
-package com.example.ticketbookingrailwayapplication.entity;
+package com.example.ticketbookingrailwayapplication.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.Data;
 
 import java.time.LocalTime;
 
 @Entity
 @Table(name = "stations")
 @Data
-//@ToString
-//@EqualsAndHashCode
-//@Getter
-//
-//@RequiredArgsConstructor
+
 
 public class Station {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String city;
-    @Transient
-    private int trainId;
+
     private LocalTime time;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "train_id", nullable = false)
     @JsonIgnore
+
+
     private Train train;
-      public void setTrainId() {
-        this.trainId =  this.train.getId();
-    }
+
 }
