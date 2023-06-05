@@ -1,6 +1,6 @@
 -- trains
 insert into trains (number,train_name)values ('105К','Київ-Одеса');
-insert into trains (number,train_name)values ('022Л','ЛЬвів-Харків');
+insert into trains (number,train_name)values ('022Л','Львів-Харків');
 insert into trains (number,train_name)values ('038К','Київ-Запоріжжя');
 --stations
 --train_id 1,105К,Київ-Одеса

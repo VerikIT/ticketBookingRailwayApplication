@@ -1,6 +1,7 @@
 package com.example.ticketbookingrailwayapplication.service;
 
 import com.example.ticketbookingrailwayapplication.dao.TrainRepository;
+import com.example.ticketbookingrailwayapplication.model.Station;
 import com.example.ticketbookingrailwayapplication.model.Train;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,7 @@ public class TrainService {
 
 
     }
+
 
     public Train addNew(Train train) {
         return trainRepository.save(train);

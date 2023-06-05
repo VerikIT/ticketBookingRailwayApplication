@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Select Station</title>
+</head>
+<body>
+<form th:action="@{/hello}" method="get">
+    <input type="submit" value="home"/>
+</form>
+<h2>Вибір станцій:</h2>
+<form action="#" th:action="@{/selectStation}"  method="post">
+    <label for="city1">Звідки:</label>
+    <select name="city1" id="city1">
+        <option th:each="station : ${stations}" th:text="${station}"></option>
+    </select>
+    <label for="city2">Звідки:</label>
+    <select name="city2" id="city2">
+        <option th:each="station : ${stations}"  th:text="${station}"></option>
+    </select>
+
+    <input type="submit" value="вибрати">
+</form>
+
+<form th:action="@{/allTrains}" method="get">
+    <input type="submit" value="Всі доступні потяги"/>
+</form>
+</body>
+</html>

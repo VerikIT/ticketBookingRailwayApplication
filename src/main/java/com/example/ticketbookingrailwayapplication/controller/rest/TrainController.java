@@ -1,4 +1,4 @@
-package com.example.ticketbookingrailwayapplication.controller;
+package com.example.ticketbookingrailwayapplication.controller.rest;
 
 import com.example.ticketbookingrailwayapplication.model.Train;
 import com.example.ticketbookingrailwayapplication.service.TrainService;

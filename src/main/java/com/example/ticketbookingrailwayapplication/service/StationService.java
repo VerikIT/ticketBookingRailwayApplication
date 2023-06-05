@@ -7,7 +7,9 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class StationService {
@@ -23,6 +25,24 @@ public class StationService {
 
     public Station addNew(Station station) {
         return stationRepository.save(station);
+    }
+
+    public Set<Train> findTrainsByStations(String startCity, String finishCity) {
+        List<Station> startSt = findStationsByCity(startCity);
+        List<Station> finishSt = findStationsByCity(finishCity);
+        Set<Train> trains = new HashSet<>();
+        for (Station st1 : startSt) {
+            for (Station st2 : finishSt) {
+                if (st1.getTrain().equals(st2.getTrain())) {
+                    trains.add(st1.getTrain());
+                }
+            }
+        }
+        return trains;
+    }
+
+    public List<Station> findStationsByCity(String city) {
+        return stationRepository.findByCity(city);
     }
 
     @Transactional

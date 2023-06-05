@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class UserService implements UserDetailsService {
@@ -40,8 +39,7 @@ public class UserService implements UserDetailsService {
     }
 
     public User getUserById(long id) {
-        Optional<User> optionalUser = userRepository.findById(id);
-        return optionalUser.orElse(null);
+        return userRepository.findById(id).orElse(null);
     }
 
 
@@ -53,6 +51,8 @@ public class UserService implements UserDetailsService {
         User existingUser = getUserById(id);
         if (existingUser != null) {
             existingUser.setUsername(user.getUsername());
+            existingUser.setFirstName(user.getFirstName());
+            existingUser.setLastName(user.getLastName());
             existingUser.setPassword(passwordEncoder.encode(user.getPassword()));
             existingUser.setActive(user.isActive());
             existingUser.setRoles(user.getRoles());
@@ -60,7 +60,19 @@ public class UserService implements UserDetailsService {
         }
         return null;
     }
-    public User findByUsername(String username){
+
+    public int addUserDetail(long id, User user) {
+
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        return userRepository.updateById(user, id);
+
+    }
+
+    public int addUserDetailNoPass(long id, User user) {
+        return userRepository.updateByIdNoPass(user, id);
+    }
+
+    public User findByUsername(String username) {
 
         return userRepository.findByUsername(username);
     }
@@ -71,7 +83,7 @@ public class UserService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-               return userRepository.findByUsername(username);
+        return userRepository.findByUsername(username);
     }
 
 }

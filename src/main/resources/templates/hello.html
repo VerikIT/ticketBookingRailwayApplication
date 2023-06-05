@@ -5,12 +5,25 @@
   <title>Hello World!</title>
 </head>
 <body>
-<h1>
-  Hello, <a th:text="${user}" />
-</h1>
+
+<form th:action="@{/home}" method="get">
+  <input type="submit" value="home"/>
+</form>
 
 <form th:action="@{/logout}" method="post">
   <input type="submit" value="Sign Out"/>
 </form>
+<h1>
+  Hello, <a th:text="${user}" />
+</h1>
+
+<form th:action="@{/details}" method="get">
+  <input type="submit" value="введіть свої дані"/>
+</form>
+
+<form th:action="@{/selectStation}" method="get">
+  <input type="submit" value="перейти до вибору станцій"/>
+</form>
+
 </body>
 </html>

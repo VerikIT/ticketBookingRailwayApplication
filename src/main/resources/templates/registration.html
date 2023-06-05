@@ -6,8 +6,9 @@
 <body>
 Registration page:
 <p th:text="${message}" style="color:red" />
+
 <form th:action="@{/registration}" method="post">
-  <div><label> User Name : <input type="text" name="username"/> </label></div>
+  <div><label> Login : <input type="text" name="username"/> </label></div>
   <div><label> Password: <input type="password" name="password"/> </label></div>
   <div><input type="submit" value="registration"/></div>
 </form>

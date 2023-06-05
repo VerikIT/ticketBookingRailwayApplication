@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form th:action="@{/hello}" method="get">
+    <input type="submit" value="home"/>
+</form>
+<h1>Оформлення квитка:</h1>
+
+<h2>
+  місце №: <a th:text="${seat}" />
+</h2>
+<h2>
+    ім'я пасажира: <a th:text="${firstName}" />
+</h2>
+<h2>
+    фамілія пасажира: <a th:text="${lastName}" />
+</h2>
+<form th:action="@{/details}" method="get">
+    <input type="submit" value="коригувати данні пасажира"/>
+</form>
+<form th:action="@{/pay}" method="get">
+    <input type="submit" value="оформити квиток"/>
+</form>
+
+</body>
+</html>

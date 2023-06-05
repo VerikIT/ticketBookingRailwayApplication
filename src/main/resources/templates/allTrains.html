@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>All Trains</title>
+</head>
+<body>
+<form th:action="@{/hello}" method="get">
+  <input type="submit" value="home"/>
+</form>
+
+<p>
+<p>
+<form th:action="@{/selectStation}" method="get">
+  <input type="submit" value="вибрати станції"/>
+</form>
+</p>
+</p>
+<h2> Всі доступні потяги:</h2>
+<table>
+  <thead>
+  <tr>
+    <th>ID</th>
+    <th>number</th>
+    <th>trainName</th>
+
+  </tr>
+  </thead>
+  <tbody>
+  <tr th:each="train : ${trains}">
+    <td th:text="${train.id}"></td>
+    <td th:text="${train.number}"></td>
+    <td th:text="${train.trainName}"></td>
+
+  </tr>
+  </tbody>
+</table>
+</body>
+</html>
