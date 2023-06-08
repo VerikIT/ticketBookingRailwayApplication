@@ -3,12 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <style>
+        body {
+            text-align: center;
+        }
+        .content {
+            display: inline-block;
+            text-align: center;
+        }
+    </style>
 </head>
 <body>
+<div class="content">
 <form th:action="@{/hello}" method="get">
     <input type="submit" value="home"/>
 </form>
 <h1> Квиток придбано! </h1>
 
+</div>
 </body>
 </html>

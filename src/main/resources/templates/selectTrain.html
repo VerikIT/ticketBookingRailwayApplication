@@ -2,8 +2,18 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>All Trains</title>
+    <style>
+        body {
+            text-align: center;
+        }
+        .content {
+            display: inline-block;
+            text-align: center;
+        }
+    </style>
 </head>
 <body>
+<div class="content">
 <form th:action="@{/hello}" method="get">
     <input type="submit" value="home"/>
 </form>
@@ -15,6 +25,7 @@
 </p>
 </p>
 <h2> Потяги за Вашим напрямком:</h2>
+
 
 <table>
     <thead>
@@ -32,19 +43,22 @@
         <td th:text="${train.number}"></td>
         <td th:text="${train.trainName}"></td>
         <td>
-        <form action="#" th:action="@{/selectTrain/seat}"  method="post">
+            <form th:action="@{/ticket}" method="post">
+                <input type="hidden" name="start" th:value="${start}" />
+                <input type="hidden" name="finish" th:value="${finish}" />
+                <input type="hidden" name="trainId" th:value="${train.id}" />
 
-            <select name="seat" id="seat">
-                <option th:each="seat : ${seats}" th:text="${seat}"></option>
-            </select>
-            <input type="submit" value="вибрати">
-        </form>
+                <select name="seat" id="seat">
+                    <option th:each="seat : ${seats}" th:text="${seat}"></option>
+                </select>
+                <input type="submit" value="вибрати">
+            </form>
         </td>
 
     </tr>
     </tbody>
 </table>
-
+</div>
 
 </body>
 </html>

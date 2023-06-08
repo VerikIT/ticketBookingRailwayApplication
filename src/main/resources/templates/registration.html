@@ -2,8 +2,18 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
 <head>
   <title>Spring Security Example </title>
+  <style>
+    body {
+      text-align: center;
+    }
+    .content {
+      display: inline-block;
+      text-align: center;
+    }
+  </style>
 </head>
 <body>
+<div class="content">
 Registration page:
 <p th:text="${message}" style="color:red" />
 
@@ -13,5 +23,6 @@ Registration page:
   <div><input type="submit" value="registration"/></div>
 </form>
 <a th:href="@{/login}">login</a>
+</div>
 </body>
 </html>

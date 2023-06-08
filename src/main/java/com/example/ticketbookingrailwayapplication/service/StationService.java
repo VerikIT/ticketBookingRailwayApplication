@@ -44,6 +44,15 @@ public class StationService {
     public List<Station> findStationsByCity(String city) {
         return stationRepository.findByCity(city);
     }
+    @Transactional
+    public Station findStationByNameAndTrain(String city, Train train) {
+        List<Station> stations= stationRepository.findStationByNameAndTrain(city,train);
+        if (!stations.isEmpty()) {
+            return stations.get(0);
+        }
+        return null;
+    }
+
 
     @Transactional
     public Station addNewByTrain(Station station, int id) {
@@ -55,17 +64,12 @@ public class StationService {
     @Transactional
     public Station getById(int id) {
         Station station = stationRepository.findById(id).orElse(null);
-//        station.setTrainId();
         return station;
     }
 
     @Transactional
     public List<Station> getAll() {
         List<Station> stations = stationRepository.findAll();
-//        for (Station st:stations
-//             ) {
-//            st.setTrainId();
-//        }
         return stations;
     }
 

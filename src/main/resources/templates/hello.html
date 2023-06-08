@@ -2,28 +2,38 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
       xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
 <head>
-  <title>Hello World!</title>
+    <title>Hello World!</title>
+    <style>
+        body {
+            text-align: center;
+        }
+        .content {
+            display: inline-block;
+            text-align: center;
+        }
+    </style>
 </head>
 <body>
+<div class="content">
 
-<form th:action="@{/home}" method="get">
-  <input type="submit" value="home"/>
-</form>
+    <form th:action="@{/home}" method="get">
+        <input type="submit" value="home"/>
+    </form>
 
-<form th:action="@{/logout}" method="post">
-  <input type="submit" value="Sign Out"/>
-</form>
-<h1>
-  Hello, <a th:text="${user}" />
-</h1>
+    <form th:action="@{/logout}" method="post">
+        <input type="submit" value="Sign Out"/>
+    </form>
+    <h1>
+        Hello, <a th:text="${user}"/>
+    </h1>
 
-<form th:action="@{/details}" method="get">
-  <input type="submit" value="введіть свої дані"/>
-</form>
+    <form th:action="@{/details}" method="get">
+        <input type="submit" value="введіть свої дані"/>
+    </form>
 
-<form th:action="@{/selectStation}" method="get">
-  <input type="submit" value="перейти до вибору станцій"/>
-</form>
-
+    <form th:action="@{/selectStation}" method="get">
+        <input type="submit" value="перейти до вибору станцій"/>
+    </form>
+</div>
 </body>
 </html>

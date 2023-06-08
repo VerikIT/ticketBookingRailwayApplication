@@ -2,8 +2,18 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
 <head>
   <title> Add details </title>
+  <style>
+    body {
+      text-align: center;
+    }
+    .content {
+      display: inline-block;
+      text-align: center;
+    }
+  </style>
 </head>
 <body>
+<div class="content">
 <form th:action="@{/hello}" method="get">
   <input type="submit" value="home"/>
 </form>
@@ -19,5 +29,6 @@ Add details:
   <button type="submit">Зберегти зміни</button>
 
 </form>
+</div>
 </body>
 </html>

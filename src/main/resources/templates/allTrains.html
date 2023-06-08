@@ -2,8 +2,18 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
   <title>All Trains</title>
+  <style>
+    body {
+      text-align: center;
+    }
+    .content {
+      display: inline-block;
+      text-align: center;
+    }
+  </style>
 </head>
 <body>
+<div class="content">
 <form th:action="@{/hello}" method="get">
   <input type="submit" value="home"/>
 </form>
@@ -34,5 +44,6 @@
   </tr>
   </tbody>
 </table>
+</div>
 </body>
 </html>
