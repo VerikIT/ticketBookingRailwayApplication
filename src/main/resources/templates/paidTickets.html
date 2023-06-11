@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>All Trains</title>
+    <title>Paid tickets</title>
     <style>
         body {
             text-align: center;
@@ -45,12 +45,9 @@
             <td th:text="${ticket.getPassFirstName()}"></td>
             <td th:text="${ticket.getPassLastName()}"></td>
             <td>
-                <form th:action="@{/passData}" method="get">
-                    <input type="hidden" name="ticketId" th:value="${ticket.getId()}" />
-                    <input type="hidden" name="seat" th:value="${ticket.getSeatNumber()}" />
-                    <input type="hidden" name="firstName" th:value="${ticket.getPassFirstName()}" />
-                    <input type="hidden" name="lastName" th:value="${ticket.getPassLastName()}" />
-                    <input type="submit" value="змінити"/>
+                <form th:action="@{/updPassData}" method="get">
+                    <input type="hidden" name="ticketId" th:value="${ticket.getId()}"/>
+                    <input type="submit" value="Змінити"/>
                 </form>
             </td>
 

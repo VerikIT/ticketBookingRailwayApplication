@@ -10,8 +10,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashSet;
 import java.util.List;
@@ -48,12 +47,13 @@ public class HtmlController {
         model.addAttribute("trains", trains);
         return "allTrains";
     }
+
     @GetMapping("/paidTickets")
     public String paidTickets(
             @AuthenticationPrincipal User user, Model model) {
-        List<Ticket> tickets=ticketService.findTicketsByUser(user);
+        List<Ticket> tickets = ticketService.findTicketsByUser(user);
         model.addAttribute("tickets", tickets);
-        return "tickets";
+        return "paidTickets";
     }
 
     @GetMapping("/selectStation")
@@ -87,11 +87,13 @@ public class HtmlController {
         model.addAttribute("finish", finish);
         return "selectTrain";
     }
+
     @GetMapping("/passData")
-    public String addDetail(
+    public String addDPassData(
             @AuthenticationPrincipal User user
             , Integer seat, String start, String finish, Integer trainId
-            , Model model){
+            , Model model) {
+
         Ticket ticket = new Ticket();
         model.addAttribute("ticket", ticket);
         ticket.setUser(user);
@@ -112,24 +114,31 @@ public class HtmlController {
         return "passData";
 
     }
+
     @PostMapping("/passData")
-public String passengerData(Integer ticketId, Integer seat, String firstName, String lastName, Model model){
-        Ticket ticket=ticketService.getById(ticketId);
+    public String passengerData(
+            Integer ticketId,
+            Integer seat,
+            String firstName,
+            String lastName, Model model) {
+        Ticket ticket = ticketService.getById(ticketId);
         ticket.setSeatNumber(seat);
         ticket.setPassFirstName(firstName);
         ticket.setPassLastName(lastName);
-        ticketService.updateById(ticket,ticketId);
+        ticketService.updateById(ticket, ticketId);
         model.addAttribute("seat", seat);
         model.addAttribute("firstName", firstName);
         model.addAttribute("lastName", lastName);
-
-
-
         return "redirect:/paidTickets";
     }
 
+    @GetMapping ("/updPassData")
+    public String updatePassData(Integer ticketId, Model model) {
+        Ticket ticket = ticketService.getById(ticketId);
+        model.addAttribute("ticket", ticket);
 
-
+        return "passData";
+    }
 
 
     @GetMapping("/pay")
