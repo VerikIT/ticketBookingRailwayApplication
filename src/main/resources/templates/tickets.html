@@ -1,52 +1,65 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-  <title>All Trains</title>
-  <style>
-    body {
-      text-align: center;
-    }
-    .content {
-      display: inline-block;
-      text-align: center;
-    }
-  </style>
+    <title>All Trains</title>
+    <style>
+        body {
+            text-align: center;
+        }
+
+        .content {
+            display: inline-block;
+            text-align: center;
+        }
+    </style>
 </head>
 <body>
 <div class="content">
-  <form th:action="@{/hello}" method="get">
-    <input type="submit" value="home"/>
-  </form>
+    <form th:action="@{/hello}" method="get">
+        <input type="submit" value="home"/>
+    </form>
 
 
-  <h2> Мої квитки:</h2>
-  <table>
-    <thead>
-    <tr>
-      <th>потяг №:</th>
-      <th>назва потягу:</th>
-      <th>звідки:</th>
-      <th>куди:</th>
-      <th>місце №</th>
-      <th>ім'я:</th>
-      <th>прізвище:</th>
+    <h2> Мої квитки:</h2>
+    <table>
+        <thead>
+        <tr>
+            <th>потяг №:</th>
+            <th>назва потягу:</th>
+            <th>звідки:</th>
+            <th>куди:</th>
+            <th>місце №</th>
+            <th>ім'я:</th>
+            <th>прізвище:</th>
 
 
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="ticket : ${tickets}">
-      <td th:text="${ticket.getTrain().getNumber()}"></td>
-      <td th:text="${ticket.getTrain().getTrainName()}"></td>
-      <td th:text="${ticket.getStartStation().getCity()}"></td>
-      <td th:text="${ticket.getFinishStation().getCity()}"></td>
-      <td th:text="${ticket.getSeatNumber()}"></td>
-      <td th:text="${ticket.getPassFirstName()}"></td>
-      <td th:text="${ticket.getPassLastName()}"></td>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="ticket : ${tickets}">
+            <td th:text="${ticket.getTrain().getNumber()}"></td>
+            <td th:text="${ticket.getTrain().getTrainName()}"></td>
+            <td th:text="${ticket.getStartStation().getCity()}"></td>
+            <td th:text="${ticket.getFinishStation().getCity()}"></td>
+            <td th:text="${ticket.getSeatNumber()}"></td>
+            <td th:text="${ticket.getPassFirstName()}"></td>
+            <td th:text="${ticket.getPassLastName()}"></td>
+            <td>
+                <form th:action="@{/passData}" method="get">
+                    <input type="hidden" name="ticketId" th:value="${ticket.getId()}" />
+                    <input type="hidden" name="seat" th:value="${ticket.getSeatNumber()}" />
+                    <input type="hidden" name="firstName" th:value="${ticket.getPassFirstName()}" />
+                    <input type="hidden" name="lastName" th:value="${ticket.getPassLastName()}" />
+                    <input type="submit" value="змінити"/>
+                </form>
+            </td>
 
-    </tr>
-    </tbody>
-  </table>
+        </tr>
+        </tbody>
+    </table>
+    <form th:action="@{/selectStation}" method="get">
+        <input type="submit" value="оформити ще один квиток"/>
+    </form>
 </div>
 </body>
 </html>

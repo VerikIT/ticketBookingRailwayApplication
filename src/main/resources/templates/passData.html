@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<head>
+  <title> Add details </title>
+  <style>
+    body {
+      text-align: center;
+    }
+    .content {
+      display: inline-block;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+<div class="content">
+  <form th:action="@{/hello}" method="get">
+    <input type="submit" value="home"/>
+  </form>
+
+
+
+  Заповніть данні пасажира:
+  <form action="#" th:action="@{/passData}" method="post" th:object="${ticket}">
+
+    <input type="hidden" name="ticketId" th:value="${ticket.getId()}" />
+
+    <label> місце :</label><input type="number" name="seat" th:value="${ticket.getSeatNumber()}" /><br/>
+    <label> ім'я :</label><input type="text" name="firstName"  th:value="${ticket.getPassFirstName()}" /><br/>
+    <label> прізвище :</label><input type="text" name="lastName" th:value="${ticket.getPassLastName()}" /><br/>
+
+
+    <button type="submit">оформити квиток</button>
+
+  </form>
+</div>
+</body>
+</html>

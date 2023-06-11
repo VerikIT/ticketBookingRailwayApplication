@@ -35,7 +35,7 @@ public class TicketController {
     @Transactional
     @PatchMapping("/{id}")
     public String updateById(@PathVariable int id, @RequestBody Ticket ticket) {
-        int line = ticketService.updateById(id, ticket);
+        int line = ticketService.updateById(ticket,id);
         if (line == 1) {
             return "Updated ticket: " + id + " done!";
         } else {

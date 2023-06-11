@@ -56,7 +56,7 @@ public class TicketService {
     }
 
     @Transactional
-    public int updateById(int id, Ticket ticket) {
+    public int updateById(Ticket ticket,int id) {
         return ticketRepository.updateById(ticket, id);
     }
 

@@ -43,7 +43,7 @@
         <td th:text="${train.number}"></td>
         <td th:text="${train.trainName}"></td>
         <td>
-            <form th:action="@{/ticket}" method="post">
+            <form th:action="@{/passData}" method="get">
                 <input type="hidden" name="start" th:value="${start}" />
                 <input type="hidden" name="finish" th:value="${finish}" />
                 <input type="hidden" name="trainId" th:value="${train.id}" />
