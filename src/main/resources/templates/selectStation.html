@@ -19,12 +19,12 @@
 </form>
 <h2>Вибір станцій:</h2>
 <form action="#" th:action="@{/selectTrain}"  method="post">
-    <label for="city1">Звідки:</label>
-    <select name="city1" id="city1">
+    <label for="start">Звідки:</label>
+    <select name="start" id="start">
         <option th:each="station : ${stations}" th:text="${station}"></option>
     </select>
-    <label for="city2">Звідки:</label>
-    <select name="city2" id="city2">
+    <label for="finish">Куди:</label>
+    <select name="finish" id="finish">
         <option th:each="station : ${stations}"  th:text="${station}"></option>
     </select>
 

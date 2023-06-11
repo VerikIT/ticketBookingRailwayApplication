@@ -75,18 +75,16 @@ public class HtmlController {
     }
 
     @PostMapping("/selectTrain")
-    public String SelectedStations(String city1, String city2, Model model) {
-        Set<Train> trains = stationService.findTrainsByStations(city1, city2);
+    public String SelectedStations(String start, String finish, Model model) {
+        Set<Train> trains = stationService.findTrainsByStations(start, finish);
         Set<Integer> seats = new HashSet<>();
         for (int i = 0; i < 99; i++) {
             seats.add(i);
         }
         model.addAttribute("trains", trains);
         model.addAttribute("seats", seats);
-        model.addAttribute("start", city1);
-        model.addAttribute("finish", city2);
-
-
+        model.addAttribute("start", start);
+        model.addAttribute("finish", finish);
         return "selectTrain";
     }
     @GetMapping("/passData")
