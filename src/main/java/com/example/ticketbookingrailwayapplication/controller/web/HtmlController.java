@@ -1,23 +1,24 @@
 package com.example.ticketbookingrailwayapplication.controller.web;
 
-import com.example.ticketbookingrailwayapplication.model.Station;
-import com.example.ticketbookingrailwayapplication.model.Ticket;
-import com.example.ticketbookingrailwayapplication.model.Train;
-import com.example.ticketbookingrailwayapplication.model.User;
+import com.example.ticketbookingrailwayapplication.model.*;
 import com.example.ticketbookingrailwayapplication.service.StationService;
 import com.example.ticketbookingrailwayapplication.service.TicketService;
 import com.example.ticketbookingrailwayapplication.service.TrainService;
 import com.example.ticketbookingrailwayapplication.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import java.util.*;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @Controller
+
 public class HtmlController {
 
     private final StationService stationService;
@@ -40,6 +41,7 @@ public class HtmlController {
         return "hello";
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("/allTrains")
     public String allTrains(Model model) {
         List<Train> trains = trainService.getAll();
@@ -48,7 +50,7 @@ public class HtmlController {
     }
 
     @GetMapping("/selectStation")
-    public String selectStation(Model model) {
+    public String selectStation(@AuthenticationPrincipal User user, Model model) {
         List<Station> stationsList = stationService.getAll();
         Set<String> stations = new HashSet<>();
         String city;
@@ -60,7 +62,8 @@ public class HtmlController {
             stations.add(city);
         }
         model.addAttribute("stations", stations);
-
+        boolean isAdmin = user.getRoles().contains(Role.ROLE_ADMIN);
+        model.addAttribute("isAdmin", isAdmin);
         return "selectStation";
     }
 
@@ -79,22 +82,30 @@ public class HtmlController {
         return "selectTrain";
     }
 
+    @GetMapping("/paidTickets")
+    public String paidTickets(
+            @AuthenticationPrincipal User user, Model model) {
+        List<Ticket> tickets=ticketService.findTicketsByUser(user);
+        model.addAttribute("tickets", tickets);
+        return "tickets";
+    }
+
     @PostMapping("/ticket")
     public String selectSeat(@AuthenticationPrincipal User user, Integer seat, String start, String finish, Integer trainId, Model model) {
         Ticket ticket = new Ticket();
         Train train = trainService.getById(trainId);
         ticket.setTrain(train);
 
-        ticket.setStartStation(stationService.findStationByNameAndTrain(start,train));
-        ticket.setFinishStation(stationService.findStationByNameAndTrain(finish,train));
+        ticket.setStartStation(stationService.findStationByNameAndTrain(start, train));
+        ticket.setFinishStation(stationService.findStationByNameAndTrain(finish, train));
 
         User userFromDb = userService.findByUsername(user.getUsername());
         ticket.setPassFirstName(userFromDb.getFirstName());
         ticket.setPassLastName(userFromDb.getLastName());
 
         ticket.setSeatNumber(seat);
+        ticket.setUser(user);
         ticketService.addNew(ticket);
-
 
 
         model.addAttribute("trainNumber", ticket.getTrain().getNumber());

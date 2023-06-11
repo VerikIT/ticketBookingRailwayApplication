@@ -28,9 +28,9 @@ public class TicketController {
     public Ticket addNew(@RequestBody Ticket ticket) {
         return ticketService.addNew(ticket);
     }
-    @PostMapping("/{trainId}/{startId}/{finishId}")
-    public Ticket addNewByTrainAndStations(@PathVariable int trainId,@PathVariable int startId,@PathVariable int finishId, @RequestBody Ticket ticket) {
-        return ticketService.addNewByTrainAndStations(ticket,trainId,startId,finishId);
+    @PostMapping("/{trainId}/{startId}/{finishId}/{userId}")
+    public Ticket addNewByTrainAndStations(@PathVariable int trainId,@PathVariable int startId,@PathVariable int finishId,@PathVariable int userId, @RequestBody Ticket ticket) {
+        return ticketService.addNewByTrainStationsUser(ticket,trainId,startId,finishId,userId);
     }
     @Transactional
     @PatchMapping("/{id}")

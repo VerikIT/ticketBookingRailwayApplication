@@ -4,6 +4,7 @@ import com.example.ticketbookingrailwayapplication.dao.TicketRepository;
 import com.example.ticketbookingrailwayapplication.model.Station;
 import com.example.ticketbookingrailwayapplication.model.Ticket;
 import com.example.ticketbookingrailwayapplication.model.Train;
+import com.example.ticketbookingrailwayapplication.model.User;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,12 +16,14 @@ public class TicketService {
     private final TicketRepository ticketRepository;
     private final TrainService trainService;
     private final StationService stationService;
+    private final UserService userService;
 
     @Autowired
-    public TicketService(TicketRepository ticketRepository, TrainService trainService, StationService stationService) {
+    public TicketService(TicketRepository ticketRepository, TrainService trainService, StationService stationService, UserService userService) {
         this.ticketRepository = ticketRepository;
         this.trainService = trainService;
         this.stationService = stationService;
+        this.userService = userService;
     }
 
     public Ticket addNew(Ticket ticket) {
@@ -28,13 +31,15 @@ public class TicketService {
     }
 
     @Transactional
-    public Ticket addNewByTrainAndStations(Ticket ticket, int trainId, int startId, int finishId) {
+    public Ticket addNewByTrainStationsUser(Ticket ticket, int trainId, int startId, int finishId, int userId) {
         Train train = trainService.getById(trainId);
         ticket.setTrain(train);
         Station startStation = stationService.getById(startId);
         ticket.setStartStation(startStation);
-        Station finishStation = stationService.getById(startId);
+        Station finishStation = stationService.getById(finishId);
         ticket.setFinishStation(finishStation);
+        User user=userService.getUserById(userId);
+        ticket.setUser(user);
         return ticketRepository.save(ticket);
     }
 
@@ -49,13 +54,21 @@ public class TicketService {
         List<Ticket> tickets = ticketRepository.findAll();
         return tickets;
     }
+
     @Transactional
     public int updateById(int id, Ticket ticket) {
-        return  ticketRepository.updateById(ticket, id);
+        return ticketRepository.updateById(ticket, id);
     }
 
     public void deleteById(int id) {
         ticketRepository.deleteById(id);
+    }
+
+    public List<Ticket> findTicketsByUser(User user) {
+        List<Ticket> tickets = ticketRepository.findTicketsByUser(user);
+        return tickets;
+
+
     }
 
 }

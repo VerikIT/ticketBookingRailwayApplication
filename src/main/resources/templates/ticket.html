@@ -21,26 +21,26 @@
     </form>
     <h1>Оформлення квитка:</h1>
     <h2>
-        Потяг №: <a th:text="${trainNumber}"/>
+        потяг №: <a th:text="${trainNumber}"/>
     </h2>
     <h2>
-        Назва порягу: <a th:text="${trainName}"/>
+        назва потягу: <a th:text="${trainName}"/>
     </h2>
     <h2>
-        Звідки: <a th:text="${start}"/>
+        звідки: <a th:text="${start}"/>
     </h2>
     <h2>
-        Куди: <a th:text="${finish}"/>
+        куди: <a th:text="${finish}"/>
     </h2>
 
     <h2>
         місце №: <a th:text="${seat}"/>
     </h2>
     <h2>
-        ім'я пасажира: <a th:text="${firstName}"/>
+        ім'я: <a th:text="${firstName}"/>
     </h2>
     <h2>
-        фамілія пасажира: <a th:text="${lastName}"/>
+        прізвище: <a th:text="${lastName}"/>
     </h2>
 
     <form th:action="@{/details}" method="get">

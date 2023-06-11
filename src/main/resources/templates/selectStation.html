@@ -31,9 +31,9 @@
     <input type="submit" value="вибрати">
 </form>
 
-<form th:action="@{/allTrains}" method="get">
-    <input type="submit" value="Всі доступні потяги"/>
-</form>
+    <form th:action="@{/allTrains}" method="get" th:if="${isAdmin}">
+        <input type="submit" value="Всі доступні потяги"/>
+    </form>
 </div>
 </body>
 </html>
