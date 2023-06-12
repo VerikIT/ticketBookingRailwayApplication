@@ -1,10 +1,7 @@
 package com.example.ticketbookingrailwayapplication.controller.web;
 
 import com.example.ticketbookingrailwayapplication.model.*;
-import com.example.ticketbookingrailwayapplication.service.StationService;
-import com.example.ticketbookingrailwayapplication.service.TicketService;
-import com.example.ticketbookingrailwayapplication.service.TrainService;
-import com.example.ticketbookingrailwayapplication.service.UserService;
+import com.example.ticketbookingrailwayapplication.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -25,12 +22,14 @@ public class HtmlController {
     private final UserService userService;
     private final TicketService ticketService;
 
+
     @Autowired
     public HtmlController(StationService stationService, TrainService trainService, UserService userService, TicketService ticketService) {
         this.stationService = stationService;
         this.trainService = trainService;
         this.userService = userService;
         this.ticketService = ticketService;
+
     }
 
     @GetMapping("/hello")
@@ -96,9 +95,10 @@ public class HtmlController {
 
         Ticket ticket = new Ticket();
         model.addAttribute("ticket", ticket);
-        ticket.setUser(user);
-        ticket.setPassFirstName(user.getFirstName());
-        ticket.setPassLastName(user.getLastName());
+        User user1 = userService.getUserById(user.getId());
+        ticket.setUser(user1);
+        ticket.setPassFirstName(user1.getFirstName());
+        ticket.setPassLastName(user1.getLastName());
 
         Train train = trainService.getById(trainId);
         ticket.setTrain(train);
@@ -109,8 +109,6 @@ public class HtmlController {
         ticket.setSeatNumber(seat);
 
         ticketService.addNew(ticket);
-
-
         return "passData";
 
     }

@@ -21,6 +21,7 @@
 
 
     <h2> Мої квитки:</h2>
+
     <table>
         <thead>
         <tr>
@@ -54,9 +55,17 @@
         </tr>
         </tbody>
     </table>
+    <div th:if="${tickets.isEmpty()}" style="color:red">
+        поки не оформлено жодного квитка!
+    </div>
+    <div th:if="${!tickets.isEmpty()}">
     <form th:action="@{/selectStation}" method="get">
         <input type="submit" value="оформити ще один квиток"/>
     </form>
+    <form th:action="@{/pay}" method="get">
+        <input type="submit" value="оформити квитки"/>
+    </form>
+    </div>
 </div>
 </body>
 </html>

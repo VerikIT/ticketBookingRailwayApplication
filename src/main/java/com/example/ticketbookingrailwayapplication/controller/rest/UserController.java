@@ -57,8 +57,10 @@ public class UserController {
         int temp=0;
         if (user.getPassword()!=""){
             temp= userService.addUserDetail(authUser.getId(),user);
+
         }else {
             temp= userService.addUserDetailNoPass(authUser.getId(),user);
+
         }
 
        if (temp==1){

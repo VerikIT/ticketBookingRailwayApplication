@@ -26,7 +26,6 @@
 </p>
 <h2> Потяги за Вашим напрямком:</h2>
 
-
 <table>
     <thead>
     <tr>
@@ -58,6 +57,10 @@
     </tr>
     </tbody>
 </table>
+    <div th:if="${trains.isEmpty()}" style="color:red">
+        потяги за вишим напрямком не знайдено!
+    </div>
+
 </div>
 
 </body>

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" >
 <head>
     <title>Select Station</title>
     <style>
@@ -27,6 +27,9 @@
     <select name="finish" id="finish">
         <option th:each="station : ${stations}"  th:text="${station}"></option>
     </select>
+    <label for="date">Дата:</label>
+    <input type="date" id="date" name="date" value="today">
+
 
     <input type="submit" value="вибрати">
 </form>
