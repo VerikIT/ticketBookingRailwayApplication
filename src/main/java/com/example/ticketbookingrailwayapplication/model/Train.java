@@ -15,6 +15,7 @@ public class Train {
     private int id;
     private String number;
     private String trainName;
+    private double fullPrice;
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "train", cascade = CascadeType.ALL)
     private List<Station> stations;
 

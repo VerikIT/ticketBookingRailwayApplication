@@ -7,6 +7,7 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -38,9 +39,22 @@ public class TrainService {
         trainRepository.deleteById(id);
     }
 
+    public double priceTrip(Train train, Station start, Station finish) {
+        double price = train.getFullPrice() / (train.getStations().size() - 1);
+        int quantity = train.getStations().indexOf(finish)
+                - train.getStations().indexOf(start);
+        if (quantity != 0) {
+            price = price*quantity;
+        }else{
+            price =0;
+        }
+
+        return price;
+    }
+
     @Transactional
     public int updateById(int id, Train train) {
-//           return  trainRepository.updateById(train.getNumber(), train.getTrainName(), id);
-                   return  trainRepository.updateById(train, id);
+        return trainRepository.updateById(train, id);
     }
+
 }

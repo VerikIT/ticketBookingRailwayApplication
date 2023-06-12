@@ -34,9 +34,11 @@
             <th>назва потягу:</th>
             <th>звідки:</th>
             <th>куди:</th>
-            <th>місце №</th>
+            <th>дата:</th>
+            <th>місце №:</th>
             <th>ім'я:</th>
             <th>прізвище:</th>
+            <th>ціна, грн:</th>
 
 
         </tr>
@@ -45,11 +47,19 @@
         <tr th:each="ticket : ${tickets}">
             <td th:text="${ticket.getTrain().getNumber()}"></td>
             <td th:text="${ticket.getTrain().getTrainName()}"></td>
-            <td th:text="${ticket.getStartStation().getCity()}"></td>
-            <td th:text="${ticket.getFinishStation().getCity()}"></td>
+            <td>
+                <span th:text="${ticket.getStartStation().getCity()}"></span><br>
+                <span th:text="${ticket.getStartStation().getTime()}"></span>
+            </td>
+            <td>
+                <span th:text="${ticket.getFinishStation().getCity()}"></span><br>
+                <span th:text="${ticket.getFinishStation().getTime()}"></span>
+            </td>
+            <td th:text="${ticket.getDate()}"></td>
             <td th:text="${ticket.getSeatNumber()}"></td>
             <td th:text="${ticket.getPassFirstName()}"></td>
             <td th:text="${ticket.getPassLastName()}"></td>
+            <td th:text="${ticket.getPrice()}"></td>
             <td>
                 <div class="button-container">
                     <form th:action="@{/updPassData}" method="get">

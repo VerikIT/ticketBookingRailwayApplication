@@ -1,11 +1,12 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" >
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Select Station</title>
     <style>
         body {
             text-align: center;
         }
+
         .content {
             display: inline-block;
             text-align: center;
@@ -14,25 +15,27 @@
 </head>
 <body>
 <div class="content">
-<form th:action="@{/hello}" method="get">
-    <input type="submit" value="home"/>
-</form>
-<h2>Вибір станцій:</h2>
-<form action="#" th:action="@{/selectTrain}"  method="post">
-    <label for="start">Звідки:</label>
-    <select name="start" id="start">
-        <option th:each="station : ${stations}" th:text="${station}"></option>
-    </select>
-    <label for="finish">Куди:</label>
-    <select name="finish" id="finish">
-        <option th:each="station : ${stations}"  th:text="${station}"></option>
-    </select>
-    <label for="date">Дата:</label>
-    <input type="date" id="date" name="date" value="today">
+    <form th:action="@{/hello}" method="get">
+        <input type="submit" value="home"/>
+    </form>
+    <h2>Вибір станцій:</h2>
 
+    <div th:if="${equalsSt}" style="color:red">
+        Оберіть різні станції!!!
+    </div>
+    <form action="#" th:action="@{/selectTrain}" method="post">
 
-    <input type="submit" value="вибрати">
-</form>
+     <label for="start">Звідки:</label>
+        <select name="start" id="start">
+            <option th:each="station : ${stations}" th:text="${station}"></option>
+        </select>
+        <label for="finish">Куди:</label>
+        <select name="finish" id="finish">
+            <option th:each="station : ${stations}" th:text="${station}"></option>
+        </select>
+
+        <input type="submit" value="вибрати">
+    </form>
 
     <form th:action="@{/allTrains}" method="get" th:if="${isAdmin}">
         <input type="submit" value="Всі доступні потяги"/>

@@ -15,7 +15,12 @@ import java.util.List;
 public interface StationRepository extends JpaRepository<Station, Integer> {
 
 
-    List<Station> findByCity(String city);
+    @Transactional
+    @Modifying
+    @Query("SELECT s FROM Station s WHERE s.city = :#{#city}")
+    List<Station> findByCity(@Param("city") String city);
+
+//    List<Station> findByCity(String city);
 
     @Transactional
     @Modifying

@@ -23,8 +23,10 @@
   Заповніть данні пасажира:
   <form th:action="@{/passData}" method="post" th:object="${ticket}">
     <input type="hidden" name="ticketId" th:value="${ticket.getId()}" />
-    <label> місце :</label><input type="number" name="seat" th:value="${ticket.getSeatNumber()}" /><br/>
-    <label> ім'я :</label><input type="text" name="firstName" th:value="${ticket.getPassFirstName()}" /><br/>
+
+    <label>Дата:</label><input type="date" name="date" th:value="${ticket.getDate()}"/><br/>
+    <label> місце:</label><input type="number" name="seat" th:value="${ticket.getSeatNumber()}" /><br/>
+    <label> ім'я:</label><input type="text" name="firstName" th:value="${ticket.getPassFirstName()}" /><br/>
     <label> прізвище :</label><input type="text" name="lastName" th:value="${ticket.getPassLastName()}" /><br/>
     <button type="submit">оформити квиток</button>
   </form>

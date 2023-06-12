@@ -19,7 +19,7 @@ public class Station {
 
     private LocalTime time;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "train_id", nullable = false)
     @JsonIgnore
     private Train train;

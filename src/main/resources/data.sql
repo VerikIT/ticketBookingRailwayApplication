@@ -1,7 +1,7 @@
 -- trains
-insert into trains (number,train_name)values ('105К','Київ-Одеса');
-insert into trains (number,train_name)values ('022Л','Львів-Харків');
-insert into trains (number,train_name)values ('038К','Київ-Запоріжжя');
+insert into trains (number,train_name,full_price)values ('105К','Київ-Одеса',380);
+insert into trains (number,train_name,full_price)values ('022Л','Львів-Харків',550);
+insert into trains (number,train_name,full_price)values ('038К','Київ-Запоріжжя',450);
 --stations
 --train_id 1,105К,Київ-Одеса
 insert into stations (city,train_id,time)values ('Київ',1,'21:17');

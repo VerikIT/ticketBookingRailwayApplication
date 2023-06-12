@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.time.LocalDate;
+
 @Entity
 @Table(name = "tickets")
 @Data
@@ -22,12 +24,12 @@ public class Ticket {
     private Station finishStation;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
-    @JsonIgnore
     private User user;
 
     private String passFirstName;
     private String passLastName;
     private int seatNumber;
+    private LocalDate date;
     private double price;
 
 }

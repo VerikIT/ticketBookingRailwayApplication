@@ -33,8 +33,14 @@ public class StationService {
         Set<Train> trains = new HashSet<>();
         for (Station st1 : startSt) {
             for (Station st2 : finishSt) {
-                if (st1.getTrain().equals(st2.getTrain())) {
-                    trains.add(st1.getTrain());
+                Train train1 = st1.getTrain();
+                Train train2 = st2.getTrain();
+                if (train1.equals(train2)) {
+                   Train train=st1.getTrain();
+                    if (train.getStations().indexOf(st2) >=train.getStations().indexOf(st1) ) {
+                        trains.add(st1.getTrain());
+                    }
+
                 }
             }
         }
