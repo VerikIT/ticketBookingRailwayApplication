@@ -137,6 +137,11 @@ public class HtmlController {
 
         return "passData";
     }
+    @GetMapping ("/deleteTicket")
+    public String deleteTicket(Integer ticketId) {
+        ticketService.deleteById(ticketId);
+          return "redirect:/paidTickets";
+    }
 
 
     @GetMapping("/pay")

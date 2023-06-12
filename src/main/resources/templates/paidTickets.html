@@ -11,6 +11,11 @@
             display: inline-block;
             text-align: center;
         }
+        .button-container {
+            display: flex;
+            justify-content: center;
+        }
+
     </style>
 </head>
 <body>
@@ -46,10 +51,16 @@
             <td th:text="${ticket.getPassFirstName()}"></td>
             <td th:text="${ticket.getPassLastName()}"></td>
             <td>
-                <form th:action="@{/updPassData}" method="get">
-                    <input type="hidden" name="ticketId" th:value="${ticket.getId()}"/>
-                    <input type="submit" value="Змінити"/>
-                </form>
+                <div class="button-container">
+                    <form th:action="@{/updPassData}" method="get">
+                        <input type="hidden" name="ticketId" th:value="${ticket.getId()}"/>
+                        <input type="submit" value="Змінити"/>
+                    </form>
+                    <form th:action="@{/deleteTicket}" method="get">
+                        <input type="hidden" name="ticketId" th:value="${ticket.getId()}"/>
+                        <input type="submit" value="видалити"/>
+                    </form>
+                </div>
             </td>
 
         </tr>
@@ -59,12 +70,13 @@
         поки не оформлено жодного квитка!
     </div>
     <div th:if="${!tickets.isEmpty()}">
-    <form th:action="@{/selectStation}" method="get">
-        <input type="submit" value="оформити ще один квиток"/>
-    </form>
-    <form th:action="@{/pay}" method="get">
-        <input type="submit" value="оформити квитки"/>
-    </form>
+
+        <form th:action="@{/selectStation}" method="get">
+            <input type="submit" value="оформити ще один квиток"/>
+        </form>
+        <form th:action="@{/pay}" method="get">
+            <input type="submit" value="оформити квитки"/>
+        </form>
     </div>
 </div>
 </body>
