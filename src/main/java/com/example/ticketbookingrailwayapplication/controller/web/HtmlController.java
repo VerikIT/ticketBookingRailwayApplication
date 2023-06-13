@@ -1,14 +1,17 @@
 package com.example.ticketbookingrailwayapplication.controller.web;
 
 import com.example.ticketbookingrailwayapplication.model.*;
-import com.example.ticketbookingrailwayapplication.service.*;
+import com.example.ticketbookingrailwayapplication.service.StationService;
+import com.example.ticketbookingrailwayapplication.service.TicketService;
+import com.example.ticketbookingrailwayapplication.service.TrainService;
+import com.example.ticketbookingrailwayapplication.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
-
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import java.time.LocalDate;
 import java.util.HashSet;
@@ -26,7 +29,12 @@ public class HtmlController {
 
 
     @Autowired
-    public HtmlController(StationService stationService, TrainService trainService, UserService userService, TicketService ticketService) {
+    public HtmlController(
+            StationService stationService,
+            TrainService trainService,
+            UserService userService,
+            TicketService ticketService
+    ) {
         this.stationService = stationService;
         this.trainService = trainService;
         this.userService = userService;
@@ -35,8 +43,11 @@ public class HtmlController {
     }
 
     @GetMapping("/hello")
-    public String hello(
-            @AuthenticationPrincipal User user, Model model) {
+    public String hello
+            (
+                    @AuthenticationPrincipal User user,
+                    Model model
+            ) {
         model.addAttribute("user", user.getUsername());
         return "hello";
     }
@@ -51,14 +62,21 @@ public class HtmlController {
 
     @GetMapping("/paidTickets")
     public String paidTickets(
-            @AuthenticationPrincipal User user, Model model) {
+            @AuthenticationPrincipal User user,
+            Model model
+    ) {
         List<Ticket> tickets = ticketService.findTicketsByUser(user);
         model.addAttribute("tickets", tickets);
         return "paidTickets";
     }
 
     @GetMapping("/selectStation")
-    public String selectStation(@AuthenticationPrincipal User user, boolean equalsSt,  Model model) {
+    public String selectStation
+            (
+                    @AuthenticationPrincipal User user,
+                    boolean equalsSt,
+                    Model model
+            ) {
         List<Station> stationsList = stationService.getAll();
         Set<String> stations = new HashSet<>();
         String city;
@@ -78,35 +96,47 @@ public class HtmlController {
 
 
     @PostMapping("/selectTrain")
-    public String SelectedStations(String start, String finish, Model model) {
+    public String SelectedStations
+            (
+                    String start,
+                    String finish,
+                    LocalDate date,
+                    Model model
+            ) {
         if (start.equals(finish)) {
-           return "redirect:/selectStation?equalsSt=true";
+            return "redirect:/selectStation?equalsSt=true";
         }
-
         Set<Train> trains = stationService.findTrainsByStations(start, finish);
-        Set<Integer> seats = new HashSet<>();
-        for (int i = 0; i < 99; i++) {
-            seats.add(i);
+        Set<Integer> newSeats = new HashSet<>();
+        for (int i = 1; i <= 50; i++) {
+            newSeats.add(i);
         }
-
+        for (Train train : trains
+        ) {
+            if (train.getSeats().isEmpty()) {
+                train.setSeats(newSeats);
+                trainService.updateById(train.getId(), train);
+            }
+        }
         model.addAttribute("trains", trains);
-        model.addAttribute("seats", seats);
         model.addAttribute("start", start);
+        model.addAttribute("date", date);
         model.addAttribute("finish", finish);
-
+        model.addAttribute("finish", finish);
         return "selectTrain";
     }
 
     @GetMapping("/passData")
-    public String addDPassData(
-            @AuthenticationPrincipal User user,
-            LocalDate date,
-            Integer seat,
-            String start,
-            String finish,
-            Integer trainId,
-            Model model) {
-
+    public String addDPassData
+            (
+                    @AuthenticationPrincipal User user,
+                    LocalDate date,
+                    Integer seat,
+                    String start,
+                    String finish,
+                    Integer trainId,
+                    Model model
+            ) {
         Ticket ticket = new Ticket();
         model.addAttribute("ticket", ticket);
         ticket.setDate(date);
@@ -123,26 +153,30 @@ public class HtmlController {
 
         ticket.setStartStation(startStation);
         ticket.setFinishStation(finishStation);
-        ticket.setPrice(
-                trainService.priceTrip(train, startStation, finishStation)
-        );
+        ticket.setPrice(trainService.priceTrip(train, startStation, finishStation));
+
         ticket.setSeatNumber(seat);
 
         ticketService.addNew(ticket);
         return "passData";
-
     }
 
-
     @PostMapping("/passData")
-    public String passengerData(
-            Integer ticketId,
-            LocalDate date,
-            Integer seat,
-            String firstName,
-            String lastName, Model model) {
+    public String passengerData
+            (
+                    Integer ticketId,
+                    LocalDate date,
+                    Integer seat,
+                    String firstName,
+                    String lastName, Model model
+            ) {
         Ticket ticket = ticketService.getById(ticketId);
-        ticket.setSeatNumber(seat);
+        ticket.getTrain().getSeats().remove(seat);
+        if (ticket.getSeatNumber() != seat) {
+            ticket.getTrain().getSeats().add(ticket.getSeatNumber());
+            ticket.setSeatNumber(seat);
+            ticket.getTrain().getSeats().remove(seat);
+        }
         ticket.setPassFirstName(firstName);
         ticket.setPassLastName(lastName);
         ticket.setDate(date);
@@ -168,11 +202,8 @@ public class HtmlController {
         return "redirect:/paidTickets";
     }
 
-
     @GetMapping("/pay")
     public String payTicket() {
         return "pay";
     }
-
-
 }

@@ -12,10 +12,12 @@ import java.util.List;
 @RequestMapping("/stations")
 public class StationController {
     private final StationService stationService;
+
     @Autowired
     public StationController(StationService stationService) {
         this.stationService = stationService;
     }
+
     @GetMapping
     public List<Station> getAll() {
         return stationService.getAll();
@@ -30,9 +32,10 @@ public class StationController {
     public Station addNew(@RequestBody Station station) {
         return stationService.addNew(station);
     }
+
     @PostMapping("/{id}/train")
     public Station addNewByTrain(@PathVariable int id, @RequestBody Station station) {
-        return stationService.addNewByTrain(station,id);
+        return stationService.addNewByTrain(station, id);
     }
 
     @Transactional

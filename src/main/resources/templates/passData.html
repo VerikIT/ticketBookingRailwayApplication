@@ -25,7 +25,13 @@
     <input type="hidden" name="ticketId" th:value="${ticket.getId()}" />
 
     <label>Дата:</label><input type="date" name="date" th:value="${ticket.getDate()}"/><br/>
-    <label> місце:</label><input type="number" name="seat" th:value="${ticket.getSeatNumber()}" /><br/>
+<!--    <label> місце:</label><input type="number" name="seat" th:value="${ticket.getSeatNumber()}" /><br/>-->
+    <label>обране місце: </label>
+    <span th:text="${ticket.getSeatNumber()}"></span>
+    <label>обрати нове:</label>
+    <select name="seat" id="seat">
+      <option th:each="seat : ${ticket.getTrain().getSeats()}" th:text="${seat}" th:selected="${seat==ticket.getSeatNumber()}"></option>
+    </select><br/>
     <label> ім'я:</label><input type="text" name="firstName" th:value="${ticket.getPassFirstName()}" /><br/>
     <label> прізвище :</label><input type="text" name="lastName" th:value="${ticket.getPassLastName()}" /><br/>
     <button type="submit">оформити квиток</button>
