@@ -49,7 +49,7 @@ public class TrainService {
         }else{
             price =0;
         }
-
+        price = Math.round(price * 100.0) / 100.0;
         return price;
     }
 

@@ -14,9 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import java.time.LocalDate;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Controller
 
@@ -78,7 +76,7 @@ public class HtmlController {
                     Model model
             ) {
         List<Station> stationsList = stationService.getAll();
-        Set<String> stations = new HashSet<>();
+        List<String> stations = new ArrayList<>();
         String city;
         for (var st : stationsList) {
             city = st.getCity();
@@ -87,6 +85,7 @@ public class HtmlController {
             }
             stations.add(city);
         }
+        Collections.sort(stations);
         model.addAttribute("equalsSt", equalsSt);
         model.addAttribute("stations", stations);
         boolean isAdmin = user.getRoles().contains(Role.ROLE_ADMIN);
