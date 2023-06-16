@@ -53,9 +53,23 @@ public class HtmlController {
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("/allTrains")
     public String allTrains(Model model) {
-        List<Train> trains = trainService.getAll();
+        Set<Train> trains = new HashSet<>(trainService.getAll());
+       addSeats(trains);
         model.addAttribute("trains", trains);
         return "allTrains";
+    }
+    private void addSeats(Set<Train> trains){
+        Set<Integer> newSeats = new HashSet<>();
+        for (int i = 1; i <= 50; i++) {
+            newSeats.add(i);
+        }
+        for (Train train : trains
+        ) {
+            if (train.getSeats().isEmpty()) {
+                train.setSeats(newSeats);
+                trainService.updateById(train.getId(), train);
+            }
+        }
     }
 
     @GetMapping("/paidTickets")
@@ -106,17 +120,7 @@ public class HtmlController {
             return "redirect:/selectStation?equalsSt=true";
         }
         Set<Train> trains = stationService.findTrainsByStations(start, finish);
-        Set<Integer> newSeats = new HashSet<>();
-        for (int i = 1; i <= 50; i++) {
-            newSeats.add(i);
-        }
-        for (Train train : trains
-        ) {
-            if (train.getSeats().isEmpty()) {
-                train.setSeats(newSeats);
-                trainService.updateById(train.getId(), train);
-            }
-        }
+        addSeats(trains);
         model.addAttribute("trains", trains);
         model.addAttribute("start", start);
         model.addAttribute("date", date);
