@@ -5,7 +5,7 @@ import com.example.ticketbookingrailwayapplication.model.Station;
 import com.example.ticketbookingrailwayapplication.model.Ticket;
 import com.example.ticketbookingrailwayapplication.model.Train;
 import com.example.ticketbookingrailwayapplication.model.User;
-import jakarta.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -43,19 +43,19 @@ public class TicketService {
         return ticketRepository.save(ticket);
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public Ticket getById(int id) {
         Ticket ticket = ticketRepository.findById(id).orElse(null);
         return ticket;
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public List<Ticket> getAll() {
         List<Ticket> tickets = ticketRepository.findAll();
         return tickets;
     }
 
-    @Transactional
+
     public int updateById(Ticket ticket,int id) {
         return ticketRepository.updateById(ticket, id);
     }
@@ -63,7 +63,7 @@ public class TicketService {
     public void deleteById(int id) {
         ticketRepository.deleteById(id);
     }
-
+    @Transactional(readOnly = true)
     public List<Ticket> findTicketsByUser(User user) {
         List<Ticket> tickets = ticketRepository.findTicketsByUser(user);
         return tickets;

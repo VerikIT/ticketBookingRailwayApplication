@@ -34,7 +34,7 @@ public class TrainController {
         return trainService.addNew(train);
     }
 
-    @Transactional
+
     @PatchMapping("/{id}")
     public String updateById(@PathVariable int id, @RequestBody Train train) {
         int line = trainService.updateById(id, train);
@@ -45,7 +45,7 @@ public class TrainController {
         }
     }
 
-    @Transactional
+
     @DeleteMapping("/{id}")
     public String deleteById(@PathVariable int id) {
         trainService.deleteById(id);

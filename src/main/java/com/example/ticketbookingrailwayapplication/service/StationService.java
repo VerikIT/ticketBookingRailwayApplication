@@ -3,9 +3,9 @@ package com.example.ticketbookingrailwayapplication.service;
 import com.example.ticketbookingrailwayapplication.dao.StationRepository;
 import com.example.ticketbookingrailwayapplication.model.Station;
 import com.example.ticketbookingrailwayapplication.model.Train;
-import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashSet;
 import java.util.List;
@@ -26,7 +26,7 @@ public class StationService {
     public Station addNew(Station station) {
         return stationRepository.save(station);
     }
-
+    @Transactional(readOnly = true)
     public Set<Train> findTrainsByStations(String startCity, String finishCity) {
         List<Station> startSt = findStationsByCity(startCity);
         List<Station> finishSt = findStationsByCity(finishCity);
@@ -36,8 +36,8 @@ public class StationService {
                 Train train1 = st1.getTrain();
                 Train train2 = st2.getTrain();
                 if (train1.equals(train2)) {
-                   Train train=st1.getTrain();
-                    if (train.getStations().indexOf(st2) >=train.getStations().indexOf(st1) ) {
+                    Train train = st1.getTrain();
+                    if (train.getStations().indexOf(st2) >= train.getStations().indexOf(st1)) {
                         trains.add(st1.getTrain());
                     }
 
@@ -46,13 +46,14 @@ public class StationService {
         }
         return trains;
     }
-
+    @Transactional(readOnly = true)
     public List<Station> findStationsByCity(String city) {
         return stationRepository.findByCity(city);
     }
-    @Transactional
+
+    @Transactional(readOnly = true)
     public Station findStationByNameAndTrain(String city, Train train) {
-        List<Station> stations= stationRepository.findStationByNameAndTrain(city,train);
+        List<Station> stations = stationRepository.findStationByNameAndTrain(city, train);
         if (!stations.isEmpty()) {
             return stations.get(0);
         }
@@ -67,19 +68,19 @@ public class StationService {
         return stationRepository.save(station);
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public Station getById(int id) {
         Station station = stationRepository.findById(id).orElse(null);
         return station;
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public List<Station> getAll() {
         List<Station> stations = stationRepository.findAll();
         return stations;
     }
 
-    @Transactional
+
     public int updateById(int id, Station station) {
         return stationRepository.updateById(station, id);
     }

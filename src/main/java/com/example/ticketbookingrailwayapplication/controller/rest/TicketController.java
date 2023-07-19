@@ -38,7 +38,7 @@ public class TicketController {
         return ticketService.addNewByTrainStationsUser(ticket, trainId, startId, finishId, userId);
     }
 
-    @Transactional
+
     @PatchMapping("/{id}")
     public String updateById(@PathVariable int id, @RequestBody Ticket ticket) {
         int line = ticketService.updateById(ticket, id);
@@ -49,7 +49,7 @@ public class TicketController {
         }
     }
 
-    @Transactional
+
     @DeleteMapping("/{id}")
     public String deleteById(@PathVariable int id) {
         ticketService.deleteById(id);

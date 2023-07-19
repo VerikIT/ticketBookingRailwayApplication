@@ -3,13 +3,11 @@ package com.example.ticketbookingrailwayapplication.service;
 import com.example.ticketbookingrailwayapplication.dao.TrainRepository;
 import com.example.ticketbookingrailwayapplication.model.Station;
 import com.example.ticketbookingrailwayapplication.model.Train;
-import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 @Service
 
@@ -27,11 +25,11 @@ public class TrainService {
     public Train addNew(Train train) {
         return trainRepository.save(train);
     }
-
+    @Transactional(readOnly = true)
     public Train getById(int id) {
         return trainRepository.findById(id).orElse(null);
     }
-
+    @Transactional(readOnly = true)
     public List<Train> getAll() {
         return trainRepository.findAll();
     }
@@ -53,7 +51,6 @@ public class TrainService {
         return price;
     }
 
-    @Transactional
     public int updateById(int id, Train train) {
         return trainRepository.updateById(train, id);
     }

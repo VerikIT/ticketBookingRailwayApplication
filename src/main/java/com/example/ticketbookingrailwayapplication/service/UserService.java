@@ -9,6 +9,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collections;
 import java.util.List;
@@ -32,21 +33,22 @@ public class UserService implements UserDetailsService {
             registerUser(admin);
         }
     }
-
+    @Transactional
     public User registerUser(User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         return userRepository.save(user);
     }
-
+    @Transactional(readOnly = true)
     public User getUserById(long id) {
         return userRepository.findById(id).orElse(null);
     }
 
-
+    @Transactional(readOnly = true)
     public List<User> getAllUsers() {
         return userRepository.findAll();
     }
 
+    @Transactional
     public User updateUser(long id, User user) {
         User existingUser = getUserById(id);
         if (existingUser != null) {
@@ -60,7 +62,7 @@ public class UserService implements UserDetailsService {
         }
         return null;
     }
-
+    @Transactional
     public int addUserDetail(long id, User user) {
 
         user.setPassword(passwordEncoder.encode(user.getPassword()));
@@ -71,7 +73,7 @@ public class UserService implements UserDetailsService {
     public int addUserDetailNoPass(long id, User user) {
         return userRepository.updateByIdNoPass(user, id);
     }
-
+    @Transactional(readOnly = true)
     public User findByUsername(String username) {
 
         return userRepository.findByUsername(username);
@@ -82,6 +84,7 @@ public class UserService implements UserDetailsService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return userRepository.findByUsername(username);
     }
