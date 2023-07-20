@@ -7,6 +7,7 @@
         body {
             text-align: center;
         }
+
         .content {
             display: inline-block;
             text-align: center;
@@ -15,10 +16,17 @@
 </head>
 <body>
 <div class="content">
-<form th:action="@{/hello}" method="get">
-    <input type="submit" value="головна"/>
-</form>
-<h1> Квиток(и) оформлено! </h1>
+    <form th:action="@{/hello}" method="get">
+        <input type="submit" value="головна"/>
+    </form>
+    <h1>
+        Оформлено квитків: <a th:text="${size}"/>
+
+    </h1>
+    <h1>
+        на суму: <a th:text="${sum}"/>
+        грн
+    </h1>
 
 </div>
 </body>

@@ -25,7 +25,6 @@
     <input type="hidden" name="ticketId" th:value="${ticket.getId()}" />
 
     <label>Дата:</label><input type="date" name="date" th:value="${ticket.getDate()}"/><br/>
-<!--    <label> місце:</label><input type="number" name="seat" th:value="${ticket.getSeatNumber()}" /><br/>-->
     <label>обране місце: </label>
     <span th:text="${ticket.getSeatNumber()}"></span>
     <label>обрати нове:</label>

@@ -98,6 +98,7 @@ public class HtmlService {
         ticket.setPrice(trainService.priceTrip(train, startStation, finishStation));
 
         ticket.setSeatNumber(seat);
+        ticket.setPaid(false);
 
         ticketService.addNew(ticket);
         return ticket;
@@ -134,6 +135,20 @@ public class HtmlService {
     public void deleteTicket(Integer ticketId) {
         ticketService.deleteById(ticketId);
     }
+
+
+@Transactional
+public List<Ticket> payTickets(Integer[] selectedTickets) {
+    List<Ticket> tickets = new ArrayList<>();
+    for (Integer ticketId : selectedTickets
+    ) {
+        Ticket ticket = ticketService.getById(ticketId);
+        ticket.setPaid(true);
+        tickets.add(ticket);
+    }
+    return tickets;
+}
+
 
 
     private void addSeats(Set<Train> trains) {

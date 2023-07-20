@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -21,6 +22,7 @@ import java.util.Set;
 
 public class HtmlController {
     private final HtmlService htmlService;
+
     @Autowired
     public HtmlController(
             HtmlService htmlService) {
@@ -139,8 +141,17 @@ public class HtmlController {
         return "redirect:/paidTickets";
     }
 
-    @GetMapping("/pay")
-    public String payTicket() {
+    @PostMapping ("/pay")
+    public String payTickets(Integer[] selectedTickets, Model model) {
+        List<Ticket> tickets= htmlService.payTickets(selectedTickets);
+
+        double sum=0;
+        for (Ticket ticket:tickets
+             ) {
+           sum +=ticket.getPrice();
+        }
+        model.addAttribute("size", tickets.size());
+        model.addAttribute("sum", sum);
         return "pay";
     }
 }

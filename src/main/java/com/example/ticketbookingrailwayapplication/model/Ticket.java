@@ -30,6 +30,6 @@ public class Ticket {
     private int seatNumber;
     private LocalDate date;
     private double price;
-
+    private boolean paid;
 
 }

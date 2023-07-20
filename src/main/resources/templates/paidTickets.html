@@ -11,6 +11,7 @@
             display: inline-block;
             text-align: center;
         }
+
         .button-container {
             display: flex;
             justify-content: center;
@@ -26,72 +27,76 @@
 
 
     <h2> Мої квитки:</h2>
-
-    <table>
-        <thead>
-        <tr>
-            <th>вибір</th>
-            <th>потяг №:</th>
-            <th>назва потягу:</th>
-            <th>звідки:</th>
-            <th>куди:</th>
-            <th>дата:</th>
-            <th>місце №:</th>
-            <th>ім'я:</th>
-            <th>прізвище:</th>
-            <th>ціна, грн:</th>
-
-
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="ticket : ${tickets}">
-            <td>
-                <input type="checkbox" name="selectedTickets" th:value="${ticket.getId()}"/>
-            </td>
-            <td th:text="${ticket.getTrain().getNumber()}"></td>
-            <td th:text="${ticket.getTrain().getTrainName()}"></td>
-            <td>
-                <span th:text="${ticket.getStartStation().getCity()}"></span><br>
-                <span th:text="${ticket.getStartStation().getTime()}"></span>
-            </td>
-            <td>
-                <span th:text="${ticket.getFinishStation().getCity()}"></span><br>
-                <span th:text="${ticket.getFinishStation().getTime()}"></span>
-            </td>
-            <td th:text="${ticket.getDate()}"></td>
-            <td th:text="${ticket.getSeatNumber()}"></td>
-            <td th:text="${ticket.getPassFirstName()}"></td>
-            <td th:text="${ticket.getPassLastName()}"></td>
-            <td th:text="${ticket.getPrice()}"></td>
-            <td>
-                <div class="button-container">
-                    <form th:action="@{/updPassData}" method="get">
-                        <input type="hidden" name="ticketId" th:value="${ticket.getId()}"/>
-                        <input type="submit" value="Змінити"/>
-                    </form>
-                    <form th:action="@{/deleteTicket}" method="get">
-                        <input type="hidden" name="ticketId" th:value="${ticket.getId()}"/>
-                        <input type="submit" value="видалити"/>
-                    </form>
-                </div>
-            </td>
-
-        </tr>
-        </tbody>
-    </table>
-    <div th:if="${tickets.isEmpty()}" style="color:red">
-        поки не оформлено жодного квитка!
-    </div>
     <div th:if="${!tickets.isEmpty()}">
 
         <form th:action="@{/selectStation}" method="get">
             <input type="submit" value="оформити ще один квиток"/>
         </form>
-        <form th:action="@{/pay}" method="get">
+        <form th:action="@{/pay}" method="post">
+
+            <table>
+                <thead>
+                <tr>
+                    <th>вибрати</th>
+                    <th>потяг №:</th>
+                    <th>назва потягу:</th>
+                    <th>звідки:</th>
+                    <th>куди:</th>
+                    <th>дата:</th>
+                    <th>місце №:</th>
+                    <th>ім'я:</th>
+                    <th>прізвище:</th>
+                    <th>ціна, грн:</th>
+
+
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="ticket : ${tickets}">
+                    <td>
+                        <input type="checkbox" name="selectedTickets" th:value="${ticket.getId()}"/>
+                    </td>
+
+                    <td th:text="${ticket.getTrain().getNumber()}"></td>
+                    <td th:text="${ticket.getTrain().getTrainName()}"></td>
+                    <td>
+                        <span th:text="${ticket.getStartStation().getCity()}"></span><br>
+                        <span th:text="${ticket.getStartStation().getTime()}"></span>
+                    </td>
+                    <td>
+                        <span th:text="${ticket.getFinishStation().getCity()}"></span><br>
+                        <span th:text="${ticket.getFinishStation().getTime()}"></span>
+                    </td>
+                    <td th:text="${ticket.getDate()}"></td>
+                    <td th:text="${ticket.getSeatNumber()}"></td>
+                    <td th:text="${ticket.getPassFirstName()}"></td>
+                    <td th:text="${ticket.getPassLastName()}"></td>
+                    <td th:text="${ticket.getPrice()}"></td>
+                    <td>
+                        <div class="button-container">
+                            <form th:action="@{/updPassData}" method="get">
+                                <input type="hidden" name="ticketId" th:value="${ticket.getId()}"/>
+                                <input type="submit" value="Змінити"/>
+                            </form>
+                            <form th:action="@{/deleteTicket}" method="get">
+                                <input type="hidden" name="ticketId" th:value="${ticket.getId()}"/>
+                                <input type="submit" value="видалити"/>
+                            </form>
+                        </div>
+                    </td>
+
+                </tr>
+                </tbody>
+            </table>
+
             <input type="submit" value="оформити квитки"/>
         </form>
     </div>
+
+    <div th:if="${tickets.isEmpty()}" style="color:red">
+        поки не оформлено жодного квитка!
+    </div>
+
 </div>
 </body>
 </html>
