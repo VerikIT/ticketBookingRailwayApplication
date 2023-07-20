@@ -14,20 +14,20 @@
 </head>
 <body>
 <div class="content">
-Login page:
+  Сторінка входу:
 
 <div th:if="${param.error}" style="color:red">
-  Invalid username or password.
+  невірний логін чи пароль.
 </div>
 <div th:if="${param.logout}">
-  You have been logged out.
+  Ви вийшли з системи.
 </div>
 <form th:action="@{/login}" method="post">
-  <div><label> Login : <input type="text" name="username"/> </label></div>
-  <div><label> Password: <input type="password" name="password"/> </label></div>
-  <div><input type="submit" value="Sign In"/></div>
+  <div><label> логін: <input type="text" name="username"/> </label></div>
+  <div><label> пароль: <input type="password" name="password"/> </label></div>
+  <div><input type="submit" value="вхід"/></div>
 </form>
-<a th:href="@{/registration}">Registration</a>
+<a th:href="@{/registration}">реєстрація нового користувача</a>
 </div>
 </body>
 </html>

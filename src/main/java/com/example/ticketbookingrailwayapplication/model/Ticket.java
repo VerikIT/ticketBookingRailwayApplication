@@ -31,4 +31,5 @@ public class Ticket {
     private LocalDate date;
     private double price;
 
+
 }

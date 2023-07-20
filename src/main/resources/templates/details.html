@@ -15,17 +15,17 @@
 <body>
 <div class="content">
 <form th:action="@{/hello}" method="get">
-  <input type="submit" value="home"/>
+  <input type="submit" value="головна"/>
 </form>
 
 
 <p th:text="${message}" style="color:red" />
-Add details:
+Введіть свої дані:
 <form action="#" th:action="@{/details}" method="post" th:object="${user}">
-  <label> First Name :</label><input type="text" th:field="*{firstName}" /><br/>
-  <label> Last Name :</label><input type="text" th:field="*{lastName}" /><br/>
-  <label> Login :</label><input type="text" th:field="*{username}" /><br/>
-  <div><label> New password: <input type="password" name="password"/> </label></div>
+  <label> ім'я:</label><input type="text" th:field="*{firstName}" /><br/>
+  <label> прізвище:</label><input type="text" th:field="*{lastName}" /><br/>
+  <label> логін:</label><input type="text" th:field="*{username}" /><br/>
+  <div><label> новий пароль: <input type="password" name="password"/> </label></div>
   <button type="submit">Зберегти зміни</button>
 
 </form>

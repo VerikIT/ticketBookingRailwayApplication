@@ -33,13 +33,13 @@ public class UserController {
     public String registerUser(User user, Model model) {
         User userFromDb = userService.findByUsername(user.getUsername());
         if (userFromDb != null) {
-            model.addAttribute("message", "User exists! try again");
+            model.addAttribute("message", "Користувач існує! спробуйте ще раз");
             return "registration";
         }
         user.setActive(true);
         user.setRoles(Collections.singleton(Role.ROLE_USER));
         userService.registerUser(user);
-        model.addAttribute("message", "registered");
+        model.addAttribute("message", "Успішно зареєстровано!");
 
         return "redirect:/login";
     }

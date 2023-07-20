@@ -21,7 +21,7 @@
 <body>
 <div class="content">
     <form th:action="@{/hello}" method="get">
-        <input type="submit" value="home"/>
+        <input type="submit" value="головна"/>
     </form>
 
 
@@ -30,6 +30,7 @@
     <table>
         <thead>
         <tr>
+            <th>вибір</th>
             <th>потяг №:</th>
             <th>назва потягу:</th>
             <th>звідки:</th>
@@ -45,6 +46,9 @@
         </thead>
         <tbody>
         <tr th:each="ticket : ${tickets}">
+            <td>
+                <input type="checkbox" name="selectedTickets" th:value="${ticket.getId()}"/>
+            </td>
             <td th:text="${ticket.getTrain().getNumber()}"></td>
             <td th:text="${ticket.getTrain().getTrainName()}"></td>
             <td>
