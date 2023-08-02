@@ -12,7 +12,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -51,10 +50,14 @@ public class HtmlController {
     @GetMapping("/paidTickets")
     public String paidTickets(
             @AuthenticationPrincipal User user,
+            boolean noSelect,
+            boolean alreadyPaid,
             Model model
     ) {
         List<Ticket> tickets = htmlService.paidTickets(user);
         model.addAttribute("tickets", tickets);
+        model.addAttribute("noSelect", noSelect);
+        model.addAttribute("alreadyPaid", alreadyPaid);
         return "paidTickets";
     }
 
@@ -104,10 +107,12 @@ public class HtmlController {
                     String start,
                     String finish,
                     Integer trainId,
+                    boolean isEmptyPassData,
                     Model model
             ) {
         Ticket ticket = htmlService.addPassData(user, date, seat, start, finish, trainId);
         model.addAttribute("ticket", ticket);
+        model.addAttribute("isEmptyPassData", isEmptyPassData);
         return "passData";
     }
 
@@ -121,16 +126,26 @@ public class HtmlController {
                     String lastName, Model model
             ) {
         htmlService.passengerData(ticketId, date, seat, firstName, lastName);
+        if(firstName.isEmpty()||lastName.isEmpty()){
+            return "redirect:/addPassName?ticketId="+ticketId+"&isEmptyPassData=true";
+        }
         model.addAttribute("date", date);
         model.addAttribute("seat", seat);
         model.addAttribute("firstName", firstName);
         model.addAttribute("lastName", lastName);
         return "redirect:/paidTickets";
     }
+    @GetMapping("/addPassName")
+    public String addPassName(Integer ticketId,boolean isEmptyPassData , Model model) {
+        Ticket ticket = htmlService.getTicketById(ticketId);
+        model.addAttribute("ticket", ticket);
+        model.addAttribute("isEmptyPassData", isEmptyPassData);
+        return "passData";
+    }
 
     @GetMapping("/updPassData")
     public String updatePassData(Integer ticketId, Model model) {
-        Ticket ticket = htmlService.updatePassData(ticketId);
+        Ticket ticket = htmlService.getTicketById(ticketId);
         model.addAttribute("ticket", ticket);
         return "passData";
     }
@@ -141,14 +156,23 @@ public class HtmlController {
         return "redirect:/paidTickets";
     }
 
-    @PostMapping ("/pay")
+    @PostMapping("/pay")
     public String payTickets(Integer[] selectedTickets, Model model) {
-        List<Ticket> tickets= htmlService.payTickets(selectedTickets);
-
-        double sum=0;
-        for (Ticket ticket:tickets
-             ) {
-           sum +=ticket.getPrice();
+        if (selectedTickets == null) {
+            return "redirect:/paidTickets?noSelect=true";
+        }
+        List<Ticket> tickets = htmlService.payTickets(selectedTickets);
+        for (Ticket ticket : tickets
+        ) {
+            if (ticket.isPaid()) {
+                return "redirect:/paidTickets?alreadyPaid=true";
+            }
+        }
+        double sum = 0;
+        for (Ticket ticket : tickets
+        ) {
+            htmlService.paidTrue(ticket);
+            sum += ticket.getPrice();
         }
         model.addAttribute("size", tickets.size());
         model.addAttribute("sum", sum);

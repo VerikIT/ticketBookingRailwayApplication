@@ -17,6 +17,9 @@
   <form th:action="@{/hello}" method="get">
     <input type="submit" value="головна"/>
   </form>
+  <div th:if="${isEmptyPassData}" style="color:red">
+    Ім'я на прізвище не може бути порожнім!!!
+  </div>
 
 
 

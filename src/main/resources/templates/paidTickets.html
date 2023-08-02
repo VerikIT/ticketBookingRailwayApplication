@@ -27,6 +27,12 @@
 
 
     <h2> Мої квитки:</h2>
+    <div th:if="${noSelect}" style="color:red">
+        Оберіть квитки!!!
+    </div>
+    <div th:if="${alreadyPaid}" style="color:red">
+        Обрати можна тільки неоплачені квитки!!!
+    </div>
     <div th:if="${!tickets.isEmpty()}">
 
         <form th:action="@{/selectStation}" method="get">
@@ -47,11 +53,15 @@
                     <th>ім'я:</th>
                     <th>прізвище:</th>
                     <th>ціна, грн:</th>
+                    <th>статус квитка:</th>
+                    <th>дод. дії:</th>
 
 
                 </tr>
                 </thead>
                 <tbody>
+
+
                 <tr th:each="ticket : ${tickets}">
                     <td>
                         <input type="checkbox" name="selectedTickets" th:value="${ticket.getId()}"/>
@@ -72,8 +82,12 @@
                     <td th:text="${ticket.getPassFirstName()}"></td>
                     <td th:text="${ticket.getPassLastName()}"></td>
                     <td th:text="${ticket.getPrice()}"></td>
+                    <td th:text="${ticket.getStatus()}"></td>
                     <td>
                         <div class="button-container">
+
+                            <form>
+                            </form>
                             <form th:action="@{/updPassData}" method="get">
                                 <input type="hidden" name="ticketId" th:value="${ticket.getId()}"/>
                                 <input type="submit" value="Змінити"/>
@@ -82,8 +96,11 @@
                                 <input type="hidden" name="ticketId" th:value="${ticket.getId()}"/>
                                 <input type="submit" value="видалити"/>
                             </form>
+
+
                         </div>
                     </td>
+
 
                 </tr>
                 </tbody>

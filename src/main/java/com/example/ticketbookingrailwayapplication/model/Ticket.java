@@ -32,4 +32,14 @@ public class Ticket {
     private double price;
     private boolean paid;
 
+    public String getStatus(){
+        String status;
+        if (this.isPaid()){
+            status="придбано";
+        }else {
+            status="резерв";
+        }
+        return status;
+    }
+
 }

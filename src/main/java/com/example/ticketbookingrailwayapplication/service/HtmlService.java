@@ -127,7 +127,7 @@ public class HtmlService {
 
     }
 
-    public Ticket updatePassData(Integer ticketId) {
+    public Ticket getTicketById(Integer ticketId) {
         return ticketService.getById(ticketId);
     }
 
@@ -137,18 +137,21 @@ public class HtmlService {
     }
 
 
-@Transactional
-public List<Ticket> payTickets(Integer[] selectedTickets) {
-    List<Ticket> tickets = new ArrayList<>();
-    for (Integer ticketId : selectedTickets
-    ) {
-        Ticket ticket = ticketService.getById(ticketId);
-        ticket.setPaid(true);
-        tickets.add(ticket);
+    @Transactional
+    public List<Ticket> payTickets(Integer[] selectedTickets) {
+        List<Ticket> tickets = new ArrayList<>();
+        for (Integer ticketId : selectedTickets
+        ) {
+            Ticket ticket = ticketService.getById(ticketId);
+            tickets.add(ticket);
+        }
+        return tickets;
     }
-    return tickets;
-}
-
+    @Transactional
+    public void paidTrue(Ticket ticket) {
+        ticket.setPaid(true);
+        ticketService.updateById(ticket, ticket.getId());
+    }
 
 
     private void addSeats(Set<Train> trains) {
